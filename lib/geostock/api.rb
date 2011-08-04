@@ -69,8 +69,7 @@ module GeoStock
       text = b64encode(generate_json(value))
       cur = (Time.now.utc.to_i / REQUEST_EXPIRATION_TIME)
       d = HMAC::SHA256.new(@api_secret_token)
-      d.update text
-      d.update cur.to_s
+      d.update text + cur.to_s
       [d.hexdigest, text].join('.')
     end
     def b64encode(text)
